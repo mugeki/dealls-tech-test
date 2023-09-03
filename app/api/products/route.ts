@@ -1,5 +1,19 @@
 import { NextResponse } from "next/server";
 
+export type Product = {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  discountPercentage: number;
+  rating: number;
+  stock: number;
+  brand: string;
+  category: string;
+  thumbnail: string;
+  images: string[];
+};
+
 const maxPrice = 2000;
 
 export async function GET(request: Request) {

@@ -31,7 +31,7 @@ export default function useSaveQueryParams(key: any): SaveQueryParams {
           [key]: value?.includes("%2C") ? value.split("%2C") : value,
         };
       }, {});
-  }, []);
+  }, [key]);
 
   const saveQueryParams = (name: string, value: any) => {
     const current = new URLSearchParams(Array.from(searchParams.entries()));
@@ -47,7 +47,7 @@ export default function useSaveQueryParams(key: any): SaveQueryParams {
     router.push(`${pathname}${query}`);
   };
 
-  const bulkSaveQueryParams = (values: object = {}) => {
+  const bulkSaveQueryParams = (values: Record<string, any>) => {
     const current = new URLSearchParams(Array.from(searchParams.entries()));
 
     Object.keys(values).forEach((key) => {

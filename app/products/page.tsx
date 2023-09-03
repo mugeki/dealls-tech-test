@@ -32,6 +32,7 @@ import {
 } from "chart.js";
 import * as React from "react";
 import { Bar } from "react-chartjs-2";
+import { Product } from "../api/products/route";
 import Pagination from "../components/pagination";
 import StyledTableCell from "../components/styledTableCell";
 import TableTemplate from "../components/tableTemplate";
@@ -212,7 +213,7 @@ export default function Products() {
             <StyledTableCell align="right">Category</StyledTableCell>
           </>
         }
-        tRows={data?.products?.map((row) => (
+        tRows={data?.products?.map((row: Product) => (
           <TableRow
             key={row.id}
             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

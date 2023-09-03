@@ -1,4 +1,5 @@
 "use client";
+import { ProductCart } from "@/app/api/carts/[cartId]/route";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -32,27 +33,29 @@ export default function CartDetail() {
 
   // Fetch Cart Detail
   React.useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`/api/carts/${cartId}`, {
-        params: {
-          size: pageSize,
-          page: page,
-        },
-      })
-      .then((res) => {
-        const data = res.data;
-        setData({
-          totalQty: data?.totalQuantity,
-          totalAmount: data?.total || 0,
-          addedOn: data?.createdAt,
-          userName: data?.userName,
-          products: data?.products || [],
-          totalPage: data?.totalPage || 0,
-        });
-      })
-      .finally(() => setLoading(false));
-  }, [page, pageSize]);
+    if (cartId) {
+      setLoading(true);
+      axios
+        .get(`/api/carts/${cartId}`, {
+          params: {
+            size: pageSize,
+            page: page,
+          },
+        })
+        .then((res) => {
+          const data = res.data;
+          setData({
+            totalQty: data?.totalQuantity,
+            totalAmount: data?.total || 0,
+            addedOn: data?.createdAt,
+            userName: data?.userName,
+            products: data?.products || [],
+            totalPage: data?.totalPage || 0,
+          });
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [page, pageSize, cartId]);
 
   return (
     <main
@@ -135,7 +138,7 @@ export default function CartDetail() {
               </StyledTableCell>
             </>
           }
-          tRows={data?.products?.map((row) => (
+          tRows={data?.products?.map((row: ProductCart) => (
             <TableRow
               key={row.id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -143,10 +146,10 @@ export default function CartDetail() {
               <TableCell component="th" scope="row">
                 {row.title}
               </TableCell>
-              <TableCell align="right">{row.detail.brand}</TableCell>
-              <TableCell align="right">${row.detail.price}</TableCell>
-              <TableCell align="right">{row.detail.stock}</TableCell>
-              <TableCell align="right">{row.detail.category}</TableCell>
+              <TableCell align="right">{row.detail?.brand}</TableCell>
+              <TableCell align="right">${row.detail?.price}</TableCell>
+              <TableCell align="right">{row.detail?.stock}</TableCell>
+              <TableCell align="right">{row.detail?.category}</TableCell>
               <TableCell align="right">{row.quantity}</TableCell>
               <TableCell align="right">${row.total}</TableCell>
               <TableCell align="right">${row.discountedPrice}</TableCell>

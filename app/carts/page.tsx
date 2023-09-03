@@ -4,6 +4,7 @@ import TableRow from "@mui/material/TableRow";
 import axios from "axios";
 import Link from "next/link";
 import * as React from "react";
+import { Cart } from "../api/carts/route";
 import Pagination from "../components/pagination";
 import StyledTableCell from "../components/styledTableCell";
 import TableTemplate from "../components/tableTemplate";
@@ -71,7 +72,7 @@ export default function Carts() {
             </StyledTableCell>
           </>
         }
-        tRows={data?.carts?.map((row) => (
+        tRows={data?.carts?.map((row: Cart) => (
           <TableRow
             key={row.id}
             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

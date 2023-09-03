@@ -1,4 +1,16 @@
 import { NextResponse } from "next/server";
+import { Product } from "../../products/route";
+
+export type ProductCart = {
+  id: number;
+  title: string;
+  price: number;
+  quantity: number;
+  total: number;
+  discountPercentage: number;
+  discountedPrice: number;
+  detail: Product;
+};
 
 export async function GET(
   request: Request,
@@ -23,12 +35,12 @@ export async function GET(
   }
 
   // Fetch details for all products in the cart
-  const productDetailsPromises = dataCart.products.map((pr) =>
+  const productDetailsPromises = dataCart.products.map((pr: ProductCart) =>
     fetchProductDetails(pr.id)
   );
   const productDetails = await Promise.all(productDetailsPromises);
 
-  dataCart.products.forEach((pr, i: number) => {
+  dataCart.products.forEach((pr: ProductCart, i: number) => {
     pr.detail = { ...pr, ...productDetails[i] };
   });
 

@@ -1,4 +1,15 @@
 import { NextResponse } from "next/server";
+import { ProductCart } from "./[cartId]/route";
+
+export type Cart = {
+  id: number;
+  products: ProductCart[];
+  total: number;
+  discountedTotal: number;
+  userId: number;
+  totalProducts: number;
+  totalQuantity: number;
+};
 
 export async function GET(request: Request) {
   const params = new URL(request.url).searchParams;
